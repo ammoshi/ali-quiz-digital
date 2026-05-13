@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مراجعة تفاعلية كاملة</title>
+<style>
+body {font-family: Arial; background:#f5f5f5; text-align:center;}
+.box {background:white; padding:20px; margin:40px auto; width:75%; border-radius:10px;}
+button {padding:10px 20px; margin:8px; cursor:pointer;}
+.correct {color:green; font-weight:bold;}
+.wrong {color:red; font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2 id="question"></h2>
+<div id="answers"></div>
+<p id="feedback"></p>
+</div>
+<script>
+let qIndex=0;
+
+const questions=[
+// اختيار من متعدد
+{q:"لتطبيق تنسيق العملة على الخلايا نستخدم مجموعة؟",o:["محاذاة","أرقام","خط","تحرير"],a:1,fb:"الإجابة الصحيحة: أرقام"},
+{q:"لإدراج ورقة عمل جديدة نضغط؟",o:["-","+","×","/"],a:1,fb:"الإجابة الصحيحة: +"},
+{q:"الوصول إلى دالة IF يكون من قائمة؟",o:["مالية","نصية","تاريخ ووقت","منطقية"],a:3,fb:"الإجابة الصحيحة: منطقية"},
+{q:"نوع المخطط الأنسب للتغير بمرور الوقت؟",o:["دائري","خطي","شريطي","مبعثر"],a:1,fb:"الإجابة الصحيحة: المخطط الخطي"},
+{q:"لبدء عرض الشرائح من البداية؟",o:["F5","Esc","F1","Enter"],a:0,fb:"الإجابة الصحيحة: F5"},
+{q:"لتغيير لون خلفية الشريحة؟",o:["إدراج","تصميم","عرض","ملف"],a:1,fb:"الإجابة الصحيحة: تصميم"},
+{q:"المدة الافتراضية للانتقال Split؟",o:["0.5","1.0","1.5","2.0"],a:1,fb:"الإجابة الصحيحة: 1.0 ثانية"},
+{q:"محور الإحداثيات الأفقي؟",o:["X","Y","Z","الدوران"],a:0,fb:"الإجابة الصحيحة: X"},
+{q:"لبنات المقارنة تنتمي إلى؟",o:["تحكم","استشعار","عمليات","الدفع"],a:2,fb:"الإجابة الصحيحة: العمليات"},
+
+// صح وخطأ (true = صح)
+{q:"يمكن إدراج أيقونات من إدراج",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"يوجد تنسيق واحد فقط للتاريخ",o:["صح","خطأ"],a:1,fb:"الإجابة الصحيحة: خطأ"},
+{q:"يمكن نسخ دالة IF بالتعبئة التلقائية",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"المخطط الدائري مناسب للتغير الزمني",o:["صح","خطأ"],a:1,fb:"الإجابة الصحيحة: خطأ"},
+{q:"Esc يوقف العرض",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"الواقع الافتراضي محاكاة للعالم",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"الروبوتات الافتراضية تحتاج معدات باهظة",o:["صح","خطأ"],a:1,fb:"الإجابة الصحيحة: خطأ"},
+{q:"يبدأ الروبوت عند (0,0)",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"لبنات التكرار من التحكم",o:["صح","خطأ"],a:0,fb:"الإجابة الصحيحة: صح"},
+{q:"الحاسوب يقرر دون جمل شرطية",o:["صح","خطأ"],a:1,fb:"الإجابة الصحيحة: خطأ"}
+];
+
+function loadQ(){
+let q=questions[qIndex];
+document.getElementById("question").innerText=(qIndex+1)+"- "+q.q;
+let html="";
+q.o.forEach((opt,i)=>{
+html+=`<button onclick=check(${i})>${opt}</button>`;
+});
+document.getElementById("answers").innerHTML=html;
+document.getElementById("feedback").innerText="";
+}
+
+function check(i){
+let q=questions[qIndex];
+if(i===q.a){
+document.getElementById("feedback").innerHTML='<span class="correct">✅ إجابة صحيحة، أحسنت!</span>';
+qIndex++;
+if(qIndex<questions.length){setTimeout(loadQ,1000);}else{
+document.getElementById("question").innerText="🎉 انتهيت من المراجعة، بالتوفيق والنجاح";
+document.getElementById("answers").innerHTML="";
+}
+}else{
+document.getElementById("feedback").innerHTML=`<span class="wrong">❌ إجابة خاطئة<br>${q.fb}<br>حاول مرة أخرى</span>`;
+}
+}
+
+loadQ();
+</script>
+</body>
+</html>
